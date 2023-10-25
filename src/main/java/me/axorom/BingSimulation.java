@@ -15,13 +15,9 @@ public class BingSimulation {
     private static JavascriptExecutor js;
     public static WebDriver driver;
 
-    public static void main(String[] args) throws InterruptedException {
-        initialize();
-    }
 
-
-    public static void initialize() throws InterruptedException {
-        System.setProperty("webdriver.edge.driver", "C:\\Users\\user\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+    public static void initialize(String browser) throws InterruptedException {
+        System.setProperty("webdriver.edge.driver", browser);
         EdgeOptions options = new EdgeOptions();
         options.addArguments("userAgent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61\"");
         options.addArguments("disable-gpu");
