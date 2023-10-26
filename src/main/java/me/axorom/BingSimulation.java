@@ -93,7 +93,7 @@ public class BingSimulation {
         while (!result) {
             try {
                 result = (Boolean) js.executeScript(script);
-            } catch (NoSuchWindowException ignored) {}
+            } catch (Exception ignored) {}
             Thread.sleep(50);
         }
         Thread.sleep(1020);
