@@ -63,7 +63,7 @@ public class BingSimulation {
         }
         String script = "document.querySelector('cib-serp').shadowRoot.querySelector('#cib-action-bar-main').shadowRoot.querySelector('.button-compose').click()";
         js.executeScript(script);
-        messageNumber = 0;
+        messageNumber = 1;
         return answer;
     }
 
@@ -94,7 +94,6 @@ public class BingSimulation {
             try {
                 result = (Boolean) js.executeScript(script);
             } catch (Exception ignored) {}
-            System.out.println(result);
             Thread.sleep(50);
         }
         Thread.sleep(1020);
