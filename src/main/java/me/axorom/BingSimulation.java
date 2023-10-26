@@ -39,7 +39,6 @@ public class BingSimulation {
     public static String sendTexts(List<String> texts) throws InterruptedException {
         String answer = "";
         for (int i = 0; i < texts.size(); i++) {
-            messageNumber += 1;
             focusInput();
             sendBingMessage(texts.get(i));
             waitForSend();
@@ -60,6 +59,7 @@ public class BingSimulation {
                 answer = result;
             }
             stopAnswer();
+            messageNumber += 1;
         }
         String script = "document.querySelector('cib-serp').shadowRoot.querySelector('#cib-action-bar-main').shadowRoot.querySelector('.button-compose').click()";
         js.executeScript(script);
@@ -94,6 +94,7 @@ public class BingSimulation {
             try {
                 result = (Boolean) js.executeScript(script);
             } catch (Exception ignored) {}
+            System.out.println(result);
             Thread.sleep(50);
         }
         Thread.sleep(1020);
