@@ -20,23 +20,16 @@ public class BingSimulation {
         System.setProperty("webdriver.edge.driver", browser);
         EdgeOptions options = new EdgeOptions();
         options.addArguments("userAgent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61\"");
-        options.addArguments("disable-gpu");
         options.addArguments("ignore-certificate-errors");
-        options.addArguments("disable-infobars");
-        options.addArguments("disable-blink-features");
-        options.addArguments("disable-blink-features=AutomationControlled");
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         driver = new EdgeDriver(options);
         driver.get("https://www.bing.com/search?q=Bing+AI&showconv=1&FORM=undexpand");
-        Thread.sleep(3000);
+        Thread.sleep(4000);
         driver.findElement(By.id("bnp_btn_accept")).click();
+        Thread.sleep(100);
         js = (JavascriptExecutor) driver;
         String script = "document.querySelector('cib-serp').shadowRoot.querySelector('#cib-conversation-main').shadowRoot.querySelector('cib-welcome-container').shadowRoot.querySelector('cib-tone-selector').shadowRoot.querySelectorAll('button')[2].click()";
         js.executeScript(script);
-        focusInput();
-        sendBingMessage("Привет выполняй мои команды");
-        Thread.sleep(4000);
-        stopAnswer();
     }
 
     public static String sendText(String text) throws InterruptedException {
@@ -50,7 +43,6 @@ public class BingSimulation {
             focusInput();
             sendBingMessage(texts.get(i));
             waitForSend();
-            driver.manage().timeouts().setScriptTimeout(1000, TimeUnit.MILLISECONDS);
             String script = "return document.querySelector('cib-serp')?.shadowRoot.querySelector('#cib-conversation-main')?.shadowRoot.querySelectorAll('cib-chat-turn')[" + messageNumber + "]?.shadowRoot.querySelectorAll('cib-message-group')[1]?.shadowRoot.querySelectorAll('cib-message')[document.querySelector('cib-serp')?.shadowRoot.querySelector('#cib-conversation-main')?.shadowRoot.querySelectorAll('cib-chat-turn')[document.querySelector('cib-serp')?.shadowRoot.querySelector('#cib-conversation-main')?.shadowRoot.querySelectorAll('cib-chat-turn').length-1]?.shadowRoot.querySelectorAll('cib-message-group')[1]?.shadowRoot.querySelectorAll('cib-message').length-1]?.shadowRoot.querySelector('cib-shared').querySelector('.content').querySelector('.ac-textBlock').innerText";
             if (i == texts.size() - 1) {
                 JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -66,7 +58,6 @@ public class BingSimulation {
                     Thread.sleep(10000);
                 }
                 answer = result;
-                System.out.println(result);
             }
             stopAnswer();
         }
@@ -77,6 +68,7 @@ public class BingSimulation {
     }
 
     private static void sendBingMessage(String message) throws InterruptedException {
+        Thread.sleep(100);
         Actions actions = new Actions(driver);
         actions.sendKeys(message).perform();
         Thread.sleep(2343);
@@ -107,7 +99,8 @@ public class BingSimulation {
         Thread.sleep(1020);
     }
 
-    private static void focusInput() {
+    private static void focusInput() throws InterruptedException {
+        Thread.sleep(100);
         String scriptWriting = "document.querySelector('cib-serp').shadowRoot.querySelector('#cib-action-bar-main').shadowRoot.querySelector('cib-text-input').shadowRoot.querySelector('.text-area').focus()";
         js.executeScript(scriptWriting);
     }
