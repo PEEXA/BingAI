@@ -2,6 +2,7 @@ package me.axorom;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.v85.browser.Browser;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -19,14 +20,12 @@ public class BingSimulation {
 
     public static void initialize(String browser) throws InterruptedException {
         if (!browser.isEmpty())
-            System.setProperty("webdriver.edge.driver", browser);
+            System.setProperty("webdriver.chrome.driver", browser);
         EdgeOptions options = new EdgeOptions();
         options.addArguments("userAgent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61\"");
         options.addArguments("ignore-certificate-errors");
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-        driver = new ChromeDriver();
-        if (!browser.isEmpty())
-            driver = new EdgeDriver(options);
+        driver = new EdgeDriver();
         driver.get("https://www.bing.com/search?q=Bing+AI&showconv=1&FORM=undexpand");
         Thread.sleep(4000);
         driver.findElement(By.id("bnp_btn_accept")).click();
