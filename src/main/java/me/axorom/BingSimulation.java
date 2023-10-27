@@ -24,8 +24,10 @@ public class BingSimulation {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("userAgent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.61\"");
         options.addArguments("ignore-certificate-errors");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-        driver = new EdgeDriver();
+        driver = new EdgeDriver(options);
         driver.get("https://www.bing.com/search?q=Bing+AI&showconv=1&FORM=undexpand");
         Thread.sleep(4000);
         driver.findElement(By.id("bnp_btn_accept")).click();
@@ -34,6 +36,7 @@ public class BingSimulation {
         String script = "document.querySelector('cib-serp').shadowRoot.querySelector('#cib-conversation-main').shadowRoot.querySelector('cib-welcome-container').shadowRoot.querySelector('cib-tone-selector').shadowRoot.querySelectorAll('button')[2].click()";
         js.executeScript(script);
     }
+
 
     public static String sendText(String text) throws InterruptedException {
         return sendTexts(Collections.singletonList(text));
